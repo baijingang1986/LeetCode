@@ -1,0 +1,40 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+import java.util.*;
+public class Solution {
+    public ArrayList<Integer> postorderTraversal(TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        if(root==null)
+            return list;
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<TreeNode> stack2 = new Stack<TreeNode>();
+        stack.add(root);
+        while(!stack.isEmpty()){
+            TreeNode r = stack.pop();
+            if(r.left!=null)
+                stack.add(r.left);
+            if(r.right!=null)
+                stack.add(r.right);
+            stack2.add(r);
+        }
+        while(!stack2.isEmpty()){
+            list.add(stack2.pop().val);
+        }
+        return list;
+    }
+}
+//Recursive solution
+public void LRD(ArrayList<Integer> list,TreeNode root){
+        if(root==null)
+            return;
+        LRD(list,root.left);
+        LRD(list,root.right);
+        list.add(root.val);
+}
