@@ -1,0 +1,51 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+import java.util.*;
+public class Solution {
+    public ArrayList<Integer> preorderTraversal(TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        if(root == null){
+            return list;
+        }
+        stack.push(root);
+        while(!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            if(node.right != null){
+                stack.push(node.right);
+            }
+            if(node.left != null){
+                stack.push(node.left);
+            }
+            list.add(node.val);
+        }
+ 
+        return list;
+    }
+}
+
+//recursive solution 
+import java.util.*;
+public class Solution {
+    public ArrayList<Integer> preorderTraversal(TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        preorder(list, root);
+        return list;
+    }
+     
+    public void preorder(ArrayList<Integer> list,TreeNode root){
+        if(root == null){
+            return;
+        }
+        list.add(root.val);
+        preorder(list, root.left);
+        preorder(list, root.right);
+    }
+}
