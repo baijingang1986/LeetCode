@@ -1,0 +1,57 @@
+/**
+ * Definition for singly-linked list with a random pointer.
+ * class RandomListNode {
+ *     int label;
+ *     RandomListNode next, random;
+ *     RandomListNode(int x) { this.label = x; }
+ * };
+ */
+ /*
+     * 每个节点后都插入一个前面节点的拷贝，全部插入后再遍历，改变拷贝的next与random，形成新链表
+     * cur, nex
+     * for node = head : tail : 2
+     *  cur = node
+     *  copy = copyOf(cur)
+     *  cur.next = copy//加入新节点，因此node步长为2
+     * end
+     * for node = head+1 : newTail : 1//next改变了指向，步长为1
+     *  node.next = node.next.next;
+     *  node.random = node.random.next;
+     * end
+     * return head.next;
+     */
+
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+        if(head == null || (head.next == null && head.random == null)){
+            return head;
+        }
+        RandomListNode node = head;
+        while(node != null){
+            RandomListNode copyNode = copyOf(node);
+            node.next = copyNode;
+            node = node.next.next;           
+        }
+         
+        node = head.next;
+        while(node != null){
+            if(node.next != null){
+                 node.next = node.next.next;
+            }
+            if(node.random != null){
+                node.random = node.random.next;
+            }
+ 
+            node = node.next;
+        }
+         
+        return head.next;
+         
+    }
+    public RandomListNode copyOf(RandomListNode node){
+        RandomListNode res = new RandomListNode(node.label);
+        res.next = node.next;
+        res.random = node.random;
+        return res;
+    }
+}
