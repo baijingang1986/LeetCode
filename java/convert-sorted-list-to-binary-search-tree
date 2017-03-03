@@ -1,0 +1,68 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; next = null; }
+ * }
+ */
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+import java.util.*;
+public class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+        if(head == null){
+            return null;
+        }
+        if(head.next==null)
+            return new TreeNode(head.val);
+        ListNode fast=head;
+        ListNode slow=head;
+        ListNode leftRear = null;
+         
+        while(fast != null && fast.next != null){
+            fast=fast.next.next;
+            leftRear=slow;
+            slow=slow.next;
+        }
+        leftRear.next = null;
+         
+        TreeNode root = new TreeNode(slow.val);
+        //ListNode leftHead=null;
+        //if(slow != head)
+        //    leftHead = head;
+        ListNode rightHead = slow.next;
+        //root.left=sortedListToBST(leftHead);
+        //root.right=sortedListToBST(rightHead);
+        root.left = sortedListToBST(head);
+        root.right=sortedListToBST(rightHead);
+        return root;
+    }
+          
+       /* ListNode* temp1 = head; //每次向后移动一个节点的指针
+        ListNode* temp2 = head; //一个每次向后移动两个节点的指针
+        ListNode* temp1Pre = NULL; // 用于存储链表中间节点的前一个节点的指针
+          
+        while( temp2 != NULL && temp2 ->next != NULL)  // 通过循环找到链表的中间节点
+        {
+            temp1Pre = temp1;
+            temp1 = temp1->next;
+            temp2 = temp2->next->next;
+        }
+          
+        TreeNode* res= new TreeNode(temp1->val);
+        temp1Pre->next = NULL; //将链表中间节点前一个节点的next设为NULL，从而将原链表一分为2
+     
+        res->left = sortedListToBST(head); //递归，用前半部分来构造左子树
+        res->right = sortedListToBST(temp1->next);//递归，用后半部分构造右子树
+        temp1Pre->next = temp1;  //注意恢复一下现场！
+          
+        return res;//返回该子树的根节点的指针*/
+}
