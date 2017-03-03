@@ -1,0 +1,23 @@
+import java.util.*;
+public class Solution {
+    public int minimumTotal(ArrayList<ArrayList<Integer>> triangle) {
+        int[][] arr=new int[triangle.size()][triangle.size()];
+        arr[0][0] = triangle.get(0).get(0);
+        for(int i=1;i<triangle.size();i++){
+            for (int j=0;j<triangle.get(i).size();j++){
+                if (j==0)
+                    arr[i][j]=triangle.get(i).get(j)+arr[i-1][j];
+                else if (j==triangle.get(i).size()-1)
+                    arr[i][j]=triangle.get(i).get(j)+arr[i-1][j-1];
+                else
+                    arr[i][j]=Math.min(arr[i-1][j],arr[i-1][j-1])+triangle.get(i).get(j);
+            }
+        }
+        int min=Integer.MAX_VALUE;
+        for (int j=0;j<arr.length;j++){
+            if (min>arr[arr.length-1][j])
+                min=arr[arr.length-1][j];
+        }
+        return min;
+    }
+}
