@@ -1,0 +1,49 @@
+import java.util.*;
+public class Solution {
+    public int ladderLength(String start, String end, HashSet<String> dict) {
+        Queue<WordInfo> que=new LinkedList<WordInfo>();
+        que.offer(new WordInfo(start,1));
+        dict.remove(start);
+        while(!que.isEmpty()){
+            WordInfo info=que.poll();
+            String thisword=info.word;
+            int thisDis=info.dis;
+            Iterator<String> itr=dict.iterator();
+            while(itr.hasNext()){
+                String otherword=itr.next();
+                if(isNeighbor(thisword,otherword)){
+                    if(otherword.equals(end))
+                        return thisDis+1;
+                    else{
+                        que.offer(new WordInfo(otherword,thisDis+1));
+                        itr.remove();
+                    }
+                }
+            }
+              
+        }
+        return 0;
+    }
+      
+    public boolean isNeighbor(String word1, String word2){
+        int diff=0;
+        for(int i=0;i<word1.length();i++){
+            if(word1.charAt(i)!=word2.charAt(i)){
+                diff++;
+                if(diff>1)
+                    return false;
+            }
+        }
+        return diff==1? true:false;
+    }
+   
+}
+  
+class WordInfo{
+    String word;
+    int dis;
+    WordInfo(String word, int dis){
+        this.word=word;
+        this.dis=dis;
+    }
+}
