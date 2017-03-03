@@ -1,0 +1,27 @@
+public class Solution {
+    public boolean isPalindrome(String s) {
+         
+        if(s == null){
+            return false;
+        }
+        s = s.toLowerCase();
+        char[] cs = s.toCharArray();
+        int i,j;
+        for(i=0,j=s.length()-1;i<j;++i,--j){
+            while(i<j && !isChar(cs[i])) ++i;
+            while(i<j && !isChar(cs[j])) --j;
+            if (i<j && cs[i]!= cs[j]) return false;
+        }
+        return true;
+         
+    }
+    private boolean isChar(char c) {
+        if(c>'z')
+            return false;
+        else if (c>'9'&&c<'a')
+            return false;
+        else if(c<'0')
+            return false;
+        return true;
+    }
+}
