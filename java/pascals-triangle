@@ -1,0 +1,27 @@
+import java.util.*;
+public class Solution {
+    public ArrayList<ArrayList<Integer>> generate(int numRows) {
+        ArrayList<ArrayList<Integer>> arr = new ArrayList<ArrayList<Integer>>();
+        if(numRows <= 0){
+            return arr;
+        }
+        ArrayList<Integer> arr1 = new ArrayList<Integer>();
+        int[][] a = new int[numRows][numRows];
+        a[0][0] = 1;
+        arr1.add(a[0][0]);
+        arr.add(arr1);
+        for(int i =1;i<numRows;i++){
+            ArrayList<Integer> it = new ArrayList<Integer>();
+            for(int j =0;j<=i;j++){
+                if(j ==0 || j == i){
+                    a[i][j] = 1;
+                } else {
+                    a[i][j] = a[i-1][j]+a[i-1][j-1];
+                }
+                it.add(a[i][j]);
+            }
+            arr.add(it);
+        }
+        return arr;
+    }
+}
