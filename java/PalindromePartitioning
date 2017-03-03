@@ -1,0 +1,33 @@
+import java.util.*;
+public class Solution {
+     ArrayList<ArrayList<String>> res=new ArrayList();
+     ArrayList<String> temp=new ArrayList();
+    public ArrayList<ArrayList<String>> partition(String s) {
+        dfs(s,0);
+        return res;
+    }
+    void dfs(String s ,int pos){
+           int len=s.length();
+           if(pos>=len){
+              ArrayList<String> temp1=(ArrayList<String>)temp.clone();
+              res.add(temp1);
+              return;
+           }
+           for (int i = 1; i <= len-pos; i++){
+              String sub = s.substring(pos, pos+i);
+              if (isPalindrome(sub)){
+                  temp.add(sub);
+                  dfs(s, pos + i);
+                  temp.remove(temp.size()-1);
+              }         
+           }
+    }
+    boolean isPalindrome(String s){
+        int len=s.length();
+        if(len==1)return true;
+        String last=new StringBuffer(s).reverse().toString();
+        if(s.equals(last))
+            return true;
+        else return false;
+    }
+}
