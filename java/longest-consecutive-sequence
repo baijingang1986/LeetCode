@@ -1,0 +1,30 @@
+import java.util.*;
+public class Solution {
+    public int longestConsecutive(int[] num) {
+        Set<Integer> set = new HashSet<Integer>();
+        for(int n : num){
+            set.add(n);
+        }
+        int max =1;
+        for(int n : num){
+            if(set.remove(n)){
+                int sum = 1;
+                int val = n;
+                int big_n = val+1;
+                int small_n = val-1;
+                while(set.remove(small_n)){
+                    sum++;
+                    small_n--;
+                }
+                while(set.remove(big_n)){
+                    sum++;
+                    big_n++;
+                }
+                if(max<sum){
+                    max=sum;
+                }
+            }
+        }
+        return max;
+    }
+}
