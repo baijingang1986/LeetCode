@@ -1,0 +1,51 @@
+public class Solution {
+    public void solve(char[][] board) {
+        if(board == null ||board.length <= 0){
+            return;
+        }
+ 
+        int m = board.length;
+        int n = board[0].length;
+ 
+        if(m < 3 || n < 3){
+            return;
+        }
+         
+        for(int i =0;i<m;i++){
+            for(int j =0;j<n;j++){
+                if(board[i][j]=='O' && (i == 0 || i== m-1)){
+                    dfs(board, i , j);
+                } else if(board[i][j] == 'O' && ( j ==0 || j == n-1)){
+                    dfs(board, i , j);
+                }
+            }
+        }
+        getResult(board);
+    }
+     
+    public void dfs(char[][] board, int Row, int Col){
+        if(board[Row][Col] == 'O'){
+            board[Row][Col] = '*';
+            if(Row - 1 >= 0)
+                dfs(board, Row - 1, Col);
+            if(Row + 1 <= board.length-1)
+                dfs(board, Row + 1, Col);
+            if(Col - 1 >= 0)
+                dfs(board, Row, Col - 1);
+            if(Col + 1 < board[0].length)
+                dfs(board, Row, Col + 1);
+        }
+        else
+            return;
+    }
+     public void getResult(char[][] board){
+         for(int row = 0; row < board.length; row++){
+            for(int col = 0; col < board[0].length; col++){
+                if(board[row][col] == '*')
+                    board[row][col] = 'O';
+                else if(board[row][col] == 'O')
+                    board[row][col] = 'X';
+            }
+         }
+     }
+}
