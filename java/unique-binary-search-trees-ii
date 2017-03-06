@@ -1,0 +1,42 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; left = null; right = null; }
+ * }
+ */
+import java.util.*;
+public class Solution {
+    public ArrayList<TreeNode> generateTrees(int n) {
+        if (n <= 0) return helper(1, 0);
+        return helper(1,n);
+    }
+     
+    ArrayList<TreeNode> helper(int start,int end)
+    {
+        ArrayList<TreeNode> subTree = new ArrayList<TreeNode>();
+        if(start > end)
+        {
+            subTree.add(null);
+            return subTree;
+        }
+        for (int k = start; k <= end; k++)
+        {
+           ArrayList<TreeNode> leftSubs = helper(start, k - 1);
+           ArrayList<TreeNode> rightSubs = helper(k + 1, end);
+           for (TreeNode i : leftSubs)
+           {
+              for (TreeNode j : rightSubs)
+              {
+                TreeNode node = new TreeNode(k);
+                node.left = i;
+                node.right = j;
+                subTree.add(node);
+              }
+            }
+        }
+        return subTree;
+    }     
+}
