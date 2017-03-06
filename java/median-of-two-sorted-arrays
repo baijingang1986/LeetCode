@@ -1,0 +1,31 @@
+public class Solution {
+    public double findMedianSortedArrays(int A[], int B[]) {
+        if (A == null || B == null || (A.length + B.length) == 0) {return 0;}
+        int indexA = 0;
+        int indexB = 0;
+        double median = 0;
+        //这个while循环 写的很巧妙
+        //因为你是求median 所以只要merge sort到数组的中位即可
+        //然后这样写while也不用考虑那个数组完了不完了
+        //只要indexA+indexB=(A.length+B.length+1)/2 就跳出 出来的如果总元素是奇数的话就是median
+        while (indexA + indexB != (A.length + B.length + 1) / 2) {
+            int Ai = (indexA == A.length) ? Integer.MAX_VALUE : A[indexA];
+            int Bj = (indexB == B.length) ? Integer.MAX_VALUE : B[indexB];
+            if (Ai < Bj) {
+                median = A[indexA];
+                indexA++;
+            } else {
+                median = B[indexB];
+                indexB++;
+            }
+        }
+        if ((A.length + B.length) % 2 == 1) {
+            return median;
+        } else {
+            int Ai = (indexA == A.length) ? Integer.MAX_VALUE : A[indexA];//pa没走完就Ai=a[pa]
+            int Bj = (indexB == B.length) ? Integer.MAX_VALUE : B[indexB];//pb没走完就Bj=b[pb]
+            double median2 = (Ai < Bj) ? Ai : Bj;
+            return (median + median2) / 2;
+        }
+    }
+}
